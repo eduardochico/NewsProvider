@@ -15,17 +15,13 @@ export class GrokService {
       const host = new URL(url).hostname;
       const servername = host === 'api.grok.ai' ? 'grok.ai' : host;
       const httpsAgent = new https.Agent({ servername });
-      const response = await axios.post(
-        url,
-        { prompt },
-        {
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          httpsAgent,
+      const response = await axios.get(url, {
+        params: { prompt },
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
         },
-      );
+        httpsAgent,
+      });
       return response.data;
     } catch (err) {
       console.error('GrokService error:', err);
