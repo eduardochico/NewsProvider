@@ -23,7 +23,9 @@ export class GrokService {
       );
       return response.data;
     } catch (err) {
-      throw new InternalServerErrorException('Failed to fetch data from Grok');
+      console.error('GrokService error:', err);
+      const message = err instanceof Error ? err.message : 'Failed to fetch data from Grok';
+      throw new InternalServerErrorException(`Failed to fetch data from Grok: ${message}`);
     }
   }
 }
