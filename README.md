@@ -35,3 +35,10 @@ Failed to fetch data from Grok: getaddrinfo ENOTFOUND api.grok.ai
 Ensure that the `GROK_API_URL` in your `.env` file points to a valid host (for example `https://api.grok.ai/v1/query`) and that your network can resolve it.
 This typically means either the URL is misspelled or DNS resolution is blocked on your machine.
 
+If you encounter an error like:
+```
+AxiosError: write EPROTO ... tlsv1 unrecognized name
+```
+ensure that your system can establish a TLS connection to the Grok API. By default the
+service will connect using a server name of `grok.ai` which avoids issues with
+some TLS proxies that reject `api.grok.ai`.
