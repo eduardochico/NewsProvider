@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios from 'axios';
-import https from 'node:https';
+import * as https from 'node:https';
 
 @Injectable()
 export class GrokService {
