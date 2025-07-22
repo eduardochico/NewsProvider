@@ -9,7 +9,7 @@ export class NewsController {
 
   @Get()
   @ApiOperation({ summary: 'Get recent viral news from Mexico' })
-  async getNews() {
+  async getNews(): Promise<unknown> {
     const prompt =
       'give me the recent viral news from mexico, the answer will be on json format and you should consider the fields: title, content, image (any image that represent the news), links(list of links covering the news)';
     return this.grokService.fetchNews(prompt);

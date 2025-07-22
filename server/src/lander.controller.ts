@@ -9,7 +9,7 @@ export class LanderController {
 
   @Get()
   @ApiOperation({ summary: 'Query Grok with a custom prompt' })
-  async lander(@Query('prompt') prompt?: string) {
+  async lander(@Query('prompt') prompt?: string): Promise<unknown> {
     if (!prompt) {
       throw new BadRequestException('prompt query parameter is required');
     }

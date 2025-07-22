@@ -4,7 +4,7 @@ import * as https from 'node:https';
 
 @Injectable()
 export class GrokService {
-  async fetchNews(prompt: string) {
+  async fetchNews(prompt: string): Promise<unknown> {
     const apiKey = process.env.GROK_API_KEY;
     const url = process.env.GROK_API_URL ?? 'https://api.grok.ai/v1/query';
     if (!apiKey) {
@@ -22,18 +22,21 @@ export class GrokService {
         },
         httpsAgent,
       });
-      return response.data;
+      return response.data as unknown;
     } catch (err) {
       console.error('GrokService error:', err);
       let message = 'Failed to fetch data from Grok';
       if (err instanceof Error) {
         message = err.message;
-        if ('code' in err && (err as any).code === 'ENOTFOUND') {
+        const { code } = err as { code?: string };
+        if (code === 'ENOTFOUND') {
           message =
             'Unable to resolve host for GROK_API_URL. Verify the URL and your network connectivity.';
         }
       }
-      throw new InternalServerErrorException(`Failed to fetch data from Grok: ${message}`);
+      throw new InternalServerErrorException(
+        `Failed to fetch data from Grok: ${message}`,
+      );
     }
   }
 }
