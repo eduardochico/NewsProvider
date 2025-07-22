@@ -24,6 +24,11 @@ npm run start
 
 The API will be available at `http://localhost:3000` and Swagger documentation at `http://localhost:3000/api`.
 
+## Endpoints
+
+- `GET /news` returns recent viral news from Mexico.
+- `GET /lander?prompt=your+prompt` queries the Grok API with a custom prompt.
+
 ## Troubleshooting
 
 If you see an error similar to:
