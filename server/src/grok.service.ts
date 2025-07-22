@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios from 'axios';
+import https from 'node:https';
 
 @Injectable()
 export class GrokService {
@@ -11,6 +12,7 @@ export class GrokService {
     }
 
     try {
+      const httpsAgent = new https.Agent({ servername: new URL(url).hostname });
       const response = await axios.post(
         url,
         { prompt },
@@ -19,6 +21,7 @@ export class GrokService {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
+          httpsAgent,
         },
       );
       return response.data;
