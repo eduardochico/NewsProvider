@@ -12,7 +12,9 @@ export class GrokService {
     }
 
     try {
-      const httpsAgent = new https.Agent({ servername: new URL(url).hostname });
+      const host = new URL(url).hostname;
+      const servername = host === 'api.grok.ai' ? 'grok.ai' : host;
+      const httpsAgent = new https.Agent({ servername });
       const response = await axios.post(
         url,
         { prompt },
