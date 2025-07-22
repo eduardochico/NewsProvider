@@ -24,7 +24,14 @@ export class GrokService {
       return response.data;
     } catch (err) {
       console.error('GrokService error:', err);
-      const message = err instanceof Error ? err.message : 'Failed to fetch data from Grok';
+      let message = 'Failed to fetch data from Grok';
+      if (err instanceof Error) {
+        message = err.message;
+        if ('code' in err && (err as any).code === 'ENOTFOUND') {
+          message =
+            'Unable to resolve host for GROK_API_URL. Verify the URL and your network connectivity.';
+        }
+      }
       throw new InternalServerErrorException(`Failed to fetch data from Grok: ${message}`);
     }
   }
