@@ -29,9 +29,9 @@ The API will be available at `http://localhost:3000` and Swagger documentation a
 If you see an error similar to:
 
 ```
-Failed to fetch data from Grok: getaddrinfo ENOTFOUND api.grok.com
+Failed to fetch data from Grok: getaddrinfo ENOTFOUND api.grok.ai
 ```
 
-ensure that the `GROK_API_URL` in your `.env` file points to a valid host and that your network can resolve it.
+Ensure that the `GROK_API_URL` in your `.env` file points to a valid host (for example `https://api.grok.ai/v1/query`) and that your network can resolve it.
 This typically means either the URL is misspelled or DNS resolution is blocked on your machine.
 

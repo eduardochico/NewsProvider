@@ -5,7 +5,7 @@ import axios from 'axios';
 export class GrokService {
   async fetchNews(prompt: string) {
     const apiKey = process.env.GROK_API_KEY;
-    const url = process.env.GROK_API_URL ?? 'https://api.grok.com/v1/query';
+    const url = process.env.GROK_API_URL ?? 'https://api.grok.ai/v1/query';
     if (!apiKey) {
       throw new InternalServerErrorException('GROK_API_KEY not configured');
     }
