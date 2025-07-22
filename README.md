@@ -1,1 +1,25 @@
 # NewsProvider
+
+This project contains a simple NestJS backend service for fetching viral news from Mexico using the Grok API.
+
+## Setup
+
+```bash
+cd server
+npm install
+```
+
+Copy `.env.example` to `.env` and provide the `GROK_API_KEY`.
+
+```bash
+cp .env.example .env
+# edit .env and set GROK_API_KEY
+```
+
+## Running the server
+
+```bash
+npm run start
+```
+
+The API will be available at `http://localhost:3000` and Swagger documentation at `http://localhost:3000/api`.
