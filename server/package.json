@@ -4,8 +4,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "ts-node src/main.ts",
-    "start:dev": "ts-node-dev --respawn src/main.ts"
+    "start": "TS_NODE_CACHE=false ts-node src/main.ts",
+    "start:dev": "TS_NODE_CACHE=false ts-node-dev --respawn --no-cache src/main.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
