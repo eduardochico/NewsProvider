@@ -27,6 +27,7 @@ The API will be available at `http://localhost:3000` and Swagger documentation a
 ## Endpoints
 
 - `GET /news` returns recent viral news from Mexico using a built-in prompt.
+  The service issues a **POST** request to Grok with this prompt internally.
 - `GET /lander?prompt=your+prompt` queries the Grok API with a custom prompt.
 
 ## Troubleshooting
