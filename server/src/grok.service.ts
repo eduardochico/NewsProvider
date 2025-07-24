@@ -14,11 +14,17 @@ export class GrokService {
       const host = new URL(url).hostname;
       const servername = host === 'api.grok.ai' ? 'grok.ai' : host;
       const httpsAgent = new https.Agent({ servername });
-      const response = await axios.get(url, {
-        params: { prompt: 'hello world' },
-        headers: { Authorization: `Bearer ${apiKey}` },
-        httpsAgent,
-      });
+      const response = await axios.post(
+        url,
+        { prompt: 'hello world' },
+        {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            Accept: 'application/json',
+          },
+          httpsAgent,
+        },
+      );
       return response.data;
     } catch (err) {
       console.error('Failed to fetch data from Grok:', err);

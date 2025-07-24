@@ -27,7 +27,9 @@ The API will be available at `http://localhost:3000` with Swagger documentation 
 
 ## Endpoint
 
-- `GET /hello` queries the Grok API with the prompt "hello world" and returns the response.
+- `GET /hello` queries the Grok API with the prompt "hello world" and returns the
+  response. The server now sends a POST request to the Grok API to avoid HTML
+  responses that redirect to `/lander`.
 
 ## Troubleshooting
 
