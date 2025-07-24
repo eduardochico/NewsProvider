@@ -1,6 +1,6 @@
 # NewsProvider
 
-This project contains a simple NestJS backend service for fetching viral news from Mexico using the Grok API.
+This project contains a simple NestJS backend that demonstrates how to make a **Hello World** request to the Grok API.
 
 ## Setup
 
@@ -22,12 +22,11 @@ cp .env.example .env
 npm run start
 ```
 
-The API will be available at `http://localhost:3000` and Swagger documentation at `http://localhost:3000/api`.
+The API will be available at `http://localhost:3000` with Swagger documentation at `http://localhost:3000/api`.
 
-## Endpoints
+## Endpoint
 
-- `GET /news` returns recent viral news from Mexico using a built-in prompt.
-- `GET /lander?prompt=your+prompt` queries the Grok API with a custom prompt.
+- `GET /hello` queries the Grok API with the prompt "hello world" and returns the response.
 
 ## Troubleshooting
 
@@ -38,14 +37,11 @@ Failed to fetch data from Grok: getaddrinfo ENOTFOUND api.grok.ai
 ```
 
 Ensure that the `GROK_API_URL` in your `.env` file points to a valid host (for example `https://api.grok.ai/v1/query`) and that your network can resolve it.
-This typically means either the URL is misspelled or DNS resolution is blocked on your machine.
 
-The server now logs any HTTP status and response body received from Grok, which helps identify configuration issues.
+The server logs any HTTP status and response body received from Grok, which helps identify configuration issues.
 
 If you encounter an error like:
 ```
 AxiosError: write EPROTO ... tlsv1 unrecognized name
 ```
-ensure that your system can establish a TLS connection to the Grok API. By default the
-service will connect using a server name of `grok.ai` which avoids issues with
-some TLS proxies that reject `api.grok.ai`.
+ensure that your system can establish a TLS connection to the Grok API. By default the service will connect using a server name of `grok.ai` which avoids issues with some TLS proxies that reject `api.grok.ai`.
