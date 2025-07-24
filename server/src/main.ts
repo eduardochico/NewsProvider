@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('News Provider API')
-    .setDescription('API to fetch recent viral news from Mexico via Grok')
+    .setTitle('Grok Hello World')
+    .setDescription('Simple example using Grok API')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
