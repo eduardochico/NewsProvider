@@ -26,14 +26,33 @@ export class GrokService {
     } catch (err) {
       console.error('GrokService error:', err);
       let message = 'Failed to fetch data from Grok';
-      if (err instanceof Error) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const status = err.response.status;
+          const statusText = err.response.statusText ?? 'Unknown status';
+          message = `Grok API responded with ${status}: ${statusText}`;
+          if (err.response.data) {
+            const details =
+              typeof err.response.data === 'string'
+                ? err.response.data
+                : JSON.stringify(err.response.data);
+            message += ` - ${details}`;
+          }
+        } else if (err.request) {
+          message = 'No response received from Grok';
+        } else if (err.message) {
+          message = err.message;
+        }
+      } else if (err instanceof Error) {
         message = err.message;
         if ('code' in err && (err as any).code === 'ENOTFOUND') {
           message =
             'Unable to resolve host for GROK_API_URL. Verify the URL and your network connectivity.';
         }
       }
-      throw new InternalServerErrorException(`Failed to fetch data from Grok: ${message}`);
+      throw new InternalServerErrorException(
+        `Failed to fetch data from Grok: ${message}`,
+      );
     }
   }
 }
