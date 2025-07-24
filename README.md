@@ -22,6 +22,7 @@ cp .env.example .env
 npm run start
 ```
 
+The command disables ts-node's cache so the code is always compiled from scratch.
 The API will be available at `http://localhost:3000` with Swagger documentation at `http://localhost:3000/api`.
 
 ## Endpoint
