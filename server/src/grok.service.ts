@@ -69,7 +69,8 @@ export class GrokService {
             Accept: 'application/json',
           },
           httpsAgent,
-          timeout: 3600_000,
+          // Allow up to 3 minutes for the request to complete
+          timeout: 180_000,
         },
       );
       return response.data;
