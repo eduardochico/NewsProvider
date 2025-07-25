@@ -3,6 +3,27 @@ import axios, { AxiosRequestConfig } from 'axios';
 import * as https from 'node:https';
 import { getRedisClient } from './redis-client';
 
+function logHttpRequest(
+  method: string,
+  url: string,
+  data: any,
+  config: AxiosRequestConfig,
+) {
+  const lines: string[] = [`${method.toUpperCase()} ${url}`];
+  if (config.headers) {
+    for (const [key, value] of Object.entries(config.headers)) {
+      lines.push(`${key}: ${String(value)}`);
+    }
+  }
+  lines.push('');
+  if (data) {
+    lines.push(
+      typeof data === 'string' ? data : JSON.stringify(data, null, 2),
+    );
+  }
+  console.debug(lines.join('\n'));
+}
+
 @Injectable()
 export class GrokService {
   async helloWorld() {
@@ -15,17 +36,18 @@ export class GrokService {
       const host = new URL(url).hostname;
       const servername = host === 'api.grok.ai' ? 'grok.ai' : host;
       const httpsAgent = new https.Agent({ servername });
-      const response = await axios.post(
-        url,
-        { prompt: 'hello world' },
-        {
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            Accept: 'application/json',
-          },
-          httpsAgent,
+      const data = { prompt: 'hello world' };
+      const config: AxiosRequestConfig = {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Accept: 'application/json',
         },
-      );
+        httpsAgent,
+      };
+
+      logHttpRequest('POST', url, data, config);
+
+      const response = await axios.post(url, data, config);
       return response.data;
     } catch (err) {
       console.error('Failed to fetch data from Grok:', err);
@@ -85,6 +107,8 @@ export class GrokService {
         // Allow up to 3 minutes for the request to complete
         timeout: 180_000,
       };
+
+      logHttpRequest('POST', url, data, config);
 
       const response = await axios.post(url, data, config);
       return response.data;
