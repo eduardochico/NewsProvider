@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "TS_NODE_CACHE=false ts-node src/main.ts",
-    "start:dev": "TS_NODE_CACHE=false ts-node-dev --respawn --no-cache src/main.ts"
+    "start:dev": "TS_NODE_CACHE=false ts-node-dev --respawn --no-cache src/main.ts",
+    "fetch-news": "TS_NODE_CACHE=false ts-node src/fetch-news.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -15,7 +16,8 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "@nestjs/swagger": "^11.2.0",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "redis": "^5.6.1"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",

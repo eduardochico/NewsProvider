@@ -15,6 +15,7 @@ Copy `.env.example` to `.env` and provide the `GROK_API_KEY`.
 cp .env.example .env
 # edit .env and set GROK_API_KEY
 # optionally set GROK_COMPLETION_URL if you need to override the default
+# optionally set REDIS_URL if your Redis instance is not running locally
 ```
 
 ## Running the server
@@ -26,13 +27,24 @@ npm run start
 The command disables ts-node's cache so the code is always compiled from scratch.
 The API will be available at `http://localhost:3000` with Swagger documentation at `http://localhost:3000/api`.
 
+## Fetching news
+
+Run the following command to fetch trending news and cache it in Redis:
+
+```bash
+npm run fetch-news
+```
+
+You can schedule this command using cron to keep the cached news up to date.
+
 ## Endpoint
 
 - `GET /hello` queries the Grok API with the prompt "hello world" and returns the
   response. The server now sends a POST request to the Grok API to avoid HTML
   responses that redirect to `/lander`.
-- `GET /news` returns a JSON payload with trending news articles by calling the
-  Grok chat completions API.
+- `GET /news` returns a JSON payload with trending news articles stored in Redis.
+  The data is populated by running the `npm run fetch-news` script, which can be
+  scheduled with cron.
 
 ## Troubleshooting
 
