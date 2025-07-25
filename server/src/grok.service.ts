@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios from 'axios';
 import * as https from 'node:https';
+import { getRedisClient } from './redis-client';
 
 @Injectable()
 export class GrokService {
@@ -33,6 +34,19 @@ export class GrokService {
   }
 
   async trendingNews() {
+    const client = await getRedisClient();
+    const cached = await client.get('news:latest');
+    if (!cached) {
+      throw new InternalServerErrorException('No cached news available');
+    }
+    try {
+      return JSON.parse(cached);
+    } catch {
+      return cached;
+    }
+  }
+
+  async fetchTrendingNewsFromApi() {
     const apiKey = process.env.GROK_API_KEY;
     const url =
       process.env.GROK_COMPLETION_URL ??
