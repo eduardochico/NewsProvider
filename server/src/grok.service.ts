@@ -77,9 +77,6 @@ export class GrokService {
       throw new InternalServerErrorException('GROK_API_KEY not configured');
     }
     try {
-      const host = new URL(url).hostname;
-      const servername = host.startsWith('api.') ? host.slice(4) : host;
-      const httpsAgent = new https.Agent({ servername });
       const data = {
         messages: [
           {
@@ -98,19 +95,21 @@ export class GrokService {
       };
 
       const config: AxiosRequestConfig = {
+        url,
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        httpsAgent,
+        data,
         // Allow up to 5 minutes for the request to complete
         timeout: 300_000,
       };
 
       logHttpRequest('POST', url, data, config);
 
-      const response = await axios.post(url, data, config);
+      const response = await axios(config);
       return response.data;
     } catch (err) {
       console.error('Failed to fetch trending news from Grok:', err);
