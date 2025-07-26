@@ -104,8 +104,8 @@ export class GrokService {
           Accept: 'application/json',
         },
         httpsAgent,
-        // Allow up to 3 minutes for the request to complete
-        timeout: 180_000,
+        // Allow up to 5 minutes for the request to complete
+        timeout: 300_000,
       };
 
       logHttpRequest('POST', url, data, config);
