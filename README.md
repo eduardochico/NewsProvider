@@ -39,9 +39,6 @@ You can schedule this command using cron to keep the cached news up to date.
 
 ## Endpoint
 
-- `GET /hello` queries the Grok API with the prompt "hello world" and returns the
-  response. The server now sends a POST request to the Grok API to avoid HTML
-  responses that redirect to `/lander`.
 - `GET /news` returns a JSON payload with trending news articles stored in Redis.
   The data is populated by running the `npm run fetch-news` script, which can be
   scheduled with cron.

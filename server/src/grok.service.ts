@@ -26,34 +26,6 @@ function logHttpRequest(
 
 @Injectable()
 export class GrokService {
-  async helloWorld() {
-    const apiKey = process.env.GROK_API_KEY;
-    const url = process.env.GROK_API_URL ?? 'https://api.grok.ai/v1/query';
-    if (!apiKey) {
-      throw new InternalServerErrorException('GROK_API_KEY not configured');
-    }
-    try {
-      const host = new URL(url).hostname;
-      const servername = host === 'api.grok.ai' ? 'grok.ai' : host;
-      const httpsAgent = new https.Agent({ servername });
-      const data = { prompt: 'hello world' };
-      const config: AxiosRequestConfig = {
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          Accept: 'application/json',
-        },
-        httpsAgent,
-      };
-
-      logHttpRequest('POST', url, data, config);
-
-      const response = await axios.post(url, data, config);
-      return response.data;
-    } catch (err) {
-      console.error('Failed to fetch data from Grok:', err);
-      throw new InternalServerErrorException('Failed to fetch data from Grok');
-    }
-  }
 
   async trendingNews() {
     const client = await getRedisClient();
