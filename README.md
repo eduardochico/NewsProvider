@@ -16,6 +16,7 @@ cp .env.example .env
 # edit .env and set GROK_API_KEY
 # optionally set GROK_COMPLETION_URL if you need to override the default
 # optionally set REDIS_URL if your Redis instance is not running locally
+# optionally set SSL_KEY_PATH and SSL_CERT_PATH to enable HTTPS
 ```
 
 ## Running the server
@@ -25,7 +26,7 @@ npm run start
 ```
 
 The command disables ts-node's cache so the code is always compiled from scratch.
-The API will be available at `http://localhost:3000` with Swagger documentation at `http://localhost:3000/api`.
+If `SSL_KEY_PATH` and `SSL_CERT_PATH` are provided, the server will listen using HTTPS. In this case the API will be available at `https://localhost:3000` with Swagger documentation at `https://localhost:3000/api`. Otherwise it falls back to plain HTTP.
 
 ## Fetching news
 
