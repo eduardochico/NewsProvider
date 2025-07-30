@@ -13,7 +13,7 @@ Copy `.env.example` to `.env` and provide the `GROK_API_KEY`.
 
 ```bash
 cp .env.example .env
-# edit .env and set GROK_API_KEY
+# edit .env and set GROK_API_KEY and API_KEY
 # optionally set GROK_COMPLETION_URL if you need to override the default
 # optionally set REDIS_URL if your Redis instance is not running locally
 # optionally set SSL_KEY_PATH and SSL_CERT_PATH to enable HTTPS
@@ -43,6 +43,8 @@ You can schedule this command using cron to keep the cached news up to date.
 - `GET /news` returns a JSON payload with trending news articles stored in Redis.
   The data is populated by running the `npm run fetch-news` script, which can be
   scheduled with cron.
+- `POST /prompt` queries Grok using a custom prompt. The request body must have a
+  `prompt` field. Provide your API key via the `X-API-Key` header.
 
 ## Troubleshooting
 
