@@ -1,44 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
-import * as https from 'node:https';
 import { getRedisClient } from './redis-client';
-
-function logHttpRequest(
-  method: string,
-  url: string,
-  data: any,
-  config: AxiosRequestConfig,
-) {
-  const lines: string[] = [`${method.toUpperCase()} ${url}`];
-  if (config.headers) {
-    for (const [key, value] of Object.entries(config.headers)) {
-      lines.push(`${key}: ${String(value)}`);
-    }
-  }
-  lines.push('');
-  if (data) {
-    lines.push(
-      typeof data === 'string' ? data : JSON.stringify(data, null, 2),
-    );
-  }
-  console.debug(lines.join('\n'));
-}
-
-function logHttpResponse(
-  method: string,
-  url: string,
-  status: number,
-  data: any,
-) {
-  const lines: string[] = [
-    `${method.toUpperCase()} ${url} -> ${status}`,
-  ];
-  lines.push('');
-  if (data) {
-    lines.push(typeof data === 'string' ? data : JSON.stringify(data, null, 2));
-  }
-  console.debug(lines.join('\n'));
-}
+import { logRequest, logResponse, logError } from './logger';
 
 @Injectable()
 export class GrokService {
@@ -95,12 +58,15 @@ export class GrokService {
         timeout: 300_000,
       };
 
-      logHttpRequest('POST', url, data, config);
+      const start = Date.now();
+      logRequest('POST', url, data);
 
       const response = await axios(config);
-      logHttpResponse('POST', url, response.status, response.data);
+      const duration = Date.now() - start;
+      logResponse('POST', url, response.data, duration);
       return response.data;
     } catch (err) {
+      logError(err);
       console.error('Failed to fetch trending news from Grok:', err);
       throw new InternalServerErrorException(
         'Failed to fetch trending news from Grok',
@@ -147,12 +113,15 @@ export class GrokService {
         timeout: 300_000,
       };
 
-      logHttpRequest('POST', url, data, config);
+      const start = Date.now();
+      logRequest('POST', url, data);
 
       const response = await axios(config);
-      logHttpResponse('POST', url, response.status, response.data);
+      const duration = Date.now() - start;
+      logResponse('POST', url, response.data, duration);
       return response.data;
     } catch (err) {
+      logError(err);
       console.error('Failed to query Grok:', err);
       throw new InternalServerErrorException('Failed to query Grok');
     }
