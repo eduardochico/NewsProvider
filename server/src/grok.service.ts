@@ -91,7 +91,7 @@ export class GrokService {
     }
   }
 
-  async queryPrompt(prompt: string) {
+  async queryPrompt(prompt: string, systemRole?: string) {
     const apiKey = process.env.GROK_API_KEY;
     const url =
       process.env.GROK_COMPLETION_URL ??
@@ -104,7 +104,9 @@ export class GrokService {
         messages: [
           {
             role: 'system',
-            content: 'You are a news reporter.',
+            content: systemRole && systemRole.trim().length > 0
+              ? systemRole
+              : 'You are a news reporter.',
           },
           {
             role: 'user',

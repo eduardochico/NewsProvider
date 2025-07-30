@@ -44,7 +44,8 @@ You can schedule this command using cron to keep the cached news up to date.
   The data is populated by running the `npm run fetch-news` script, which can be
   scheduled with cron.
 - `POST /prompt` queries Grok using a custom prompt. The request body must have a
-  `prompt` field. Provide your API key via the `X-API-Key` header.
+  `prompt` field and may optionally include `system_role` to override the default
+  system prompt. Provide your API key via the `X-API-Key` header.
 
 ## Troubleshooting
 

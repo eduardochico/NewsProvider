@@ -11,10 +11,13 @@ export class PromptController {
   @Post()
   @UseGuards(ApiKeyGuard)
   @ApiOperation({ summary: 'Query Grok with a custom prompt' })
-  async handlePrompt(@Body('prompt') prompt?: string) {
+  async handlePrompt(
+    @Body('prompt') prompt?: string,
+    @Body('system_role') systemRole?: string,
+  ) {
     if (!prompt) {
       throw new BadRequestException('Prompt is required');
     }
-    return this.grokService.queryPrompt(prompt);
+    return this.grokService.queryPrompt(prompt, systemRole);
   }
 }
