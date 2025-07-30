@@ -24,6 +24,22 @@ function logHttpRequest(
   console.debug(lines.join('\n'));
 }
 
+function logHttpResponse(
+  method: string,
+  url: string,
+  status: number,
+  data: any,
+) {
+  const lines: string[] = [
+    `${method.toUpperCase()} ${url} -> ${status}`,
+  ];
+  lines.push('');
+  if (data) {
+    lines.push(typeof data === 'string' ? data : JSON.stringify(data, null, 2));
+  }
+  console.debug(lines.join('\n'));
+}
+
 @Injectable()
 export class GrokService {
 
@@ -82,6 +98,7 @@ export class GrokService {
       logHttpRequest('POST', url, data, config);
 
       const response = await axios(config);
+      logHttpResponse('POST', url, response.status, response.data);
       return response.data;
     } catch (err) {
       console.error('Failed to fetch trending news from Grok:', err);
@@ -133,6 +150,7 @@ export class GrokService {
       logHttpRequest('POST', url, data, config);
 
       const response = await axios(config);
+      logHttpResponse('POST', url, response.status, response.data);
       return response.data;
     } catch (err) {
       console.error('Failed to query Grok:', err);
