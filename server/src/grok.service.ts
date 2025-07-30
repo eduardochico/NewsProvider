@@ -90,4 +90,51 @@ export class GrokService {
       );
     }
   }
+
+  async queryPrompt(prompt: string) {
+    const apiKey = process.env.GROK_API_KEY;
+    const url =
+      process.env.GROK_COMPLETION_URL ??
+      'https://api.x.ai/v1/chat/completions';
+    if (!apiKey) {
+      throw new InternalServerErrorException('GROK_API_KEY not configured');
+    }
+    try {
+      const data = {
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a news reporter.',
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        model: 'grok-4',
+        stream: false,
+        search_parameters: { mode: 'on' },
+      };
+
+      const config: AxiosRequestConfig = {
+        url,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        data,
+        timeout: 300_000,
+      };
+
+      logHttpRequest('POST', url, data, config);
+
+      const response = await axios(config);
+      return response.data;
+    } catch (err) {
+      console.error('Failed to query Grok:', err);
+      throw new InternalServerErrorException('Failed to query Grok');
+    }
+  }
 }
