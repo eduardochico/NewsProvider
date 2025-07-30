@@ -18,6 +18,8 @@ export class PromptController {
     if (!prompt) {
       throw new BadRequestException('Prompt is required');
     }
-    return this.grokService.queryPrompt(prompt, systemRole);
+    const result = await this.grokService.queryPrompt(prompt, systemRole);
+    console.debug('Sending prompt response');
+    return result;
   }
 }

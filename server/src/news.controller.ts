@@ -10,6 +10,8 @@ export class NewsController {
   @Get()
   @ApiOperation({ summary: 'Return trending news articles from Grok' })
   async getNews() {
-    return this.grokService.trendingNews();
+    const result = await this.grokService.trendingNews();
+    console.debug('Sending trending news response');
+    return result;
   }
 }
