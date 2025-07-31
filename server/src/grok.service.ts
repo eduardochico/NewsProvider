@@ -36,8 +36,32 @@ export class GrokService {
           },
           {
             role: 'user',
-            content:
-              'Return a JSON object with a single key articles which is an array of 10 viral news articles for the locale es-MX. The news must be from the last 3 days. Each article object must have the following keys: title, summary, source, date, referenceUrl, and imageHint. Based on recent viral news or trending news right now on X and other media.',
+            content: `Return a JSON object with a single top-level key articles, which maps to an array of exactly 10 viral news articles relevant to the es-MX locale (Spanish - Mexico). The articles must meet the following criteria:
+
+Recency: Only include articles published within the last 3 days.
+
+Virality: Articles should reflect trending or viral news as observed on X (formerly Twitter), other social platforms, or top-tier media outlets in Mexico.
+
+Content quality: Each article must be factual, concise, and newsworthy.
+
+Each object in the articles array must contain the following fields:
+
+title: A clear, click-worthy headline (string)
+summary: A 1–2 sentence summary capturing the essence of the article (string)
+source: The media outlet or publisher name (string)
+date: Publication date in ISO 8601 format (YYYY-MM-DD) (string)
+referenceUrl: A direct URL to the original news article (string)
+imageHint: A short textual description to guide image generation or selection (e.g. "crowd protesting outside Palacio Nacional") (string)
+imageUrl: A direct URL to a thumbnail or featured image representing the article (string)
+category: A classification of the article into one of the following categories:
+"Politics"
+"Technology"
+"Red Notes" (i.e., crime and public safety)
+"Sports"
+"Entertainment"
+or suggest a more appropriate category if the above are not suitable, such as "Health", "Business", "Culture", "Environment", or "Science"
+
+Ensure that the final list of articles includes a diverse mix of categories and reflects what is currently resonating or trending with the Mexican audience on digital and social platforms.`,
           },
         ],
         model: 'grok-4',
