@@ -69,6 +69,7 @@ The final result should represent current trending topics in Mexico as reflected
           },
         ],
         model: 'grok-4',
+        temperature: 0.2,
         stream: false,
         search_parameters: { mode: 'on' },
       };
@@ -125,6 +126,7 @@ The final result should represent current trending topics in Mexico as reflected
           },
         ],
         model: 'grok-4',
+        temperature: 0.2,
         stream: false,
         search_parameters: { mode: 'on' },
       };
