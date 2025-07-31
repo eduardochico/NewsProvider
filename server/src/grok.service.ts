@@ -36,32 +36,36 @@ export class GrokService {
           },
           {
             role: 'user',
-            content: `Return a JSON object with a single top-level key articles, which maps to an array of exactly 10 viral news articles relevant to the es-MX locale (Spanish - Mexico). The articles must meet the following criteria:
+            content: `Return a JSON object with a single top-level key articles, which maps to an array of exactly 10 viral news articles relevant to the es-MX locale (Spanish - Mexico). These articles must meet all of the following criteria:
 
-Recency: Only include articles published within the last 3 days.
+Content Requirements:
+Recency: Only include news published within the last 3 calendar days.
+Virality: Articles must be trending or viral based on engagement from X (formerly Twitter), other major social platforms, or Mexico’s leading media outlets.
+Authenticity: ✅ Use only real, verifiable information — including actual titles, summaries, dates, media sources, URLs, and images.
+❌ Do not invent, simulate, or suggest article content, titles, images, or sources.
 
-Virality: Articles should reflect trending or viral news as observed on X (formerly Twitter), other social platforms, or top-tier media outlets in Mexico.
-
-Content quality: Each article must be factual, concise, and newsworthy.
-
-Each object in the articles array must contain the following fields:
-
-title: A clear, click-worthy headline (string)
-summary: A 1–2 sentence summary capturing the essence of the article (string)
-source: The media outlet or publisher name (string)
-date: Publication date in ISO 8601 format (YYYY-MM-DD) (string)
-referenceUrl: A direct URL to the original news article (string)
-imageHint: A short textual description to guide image generation or selection (e.g. "crowd protesting outside Palacio Nacional") (string)
-imageUrl: A direct URL to a thumbnail or featured image representing the article (string)
-category: A classification of the article into one of the following categories:
+Structure:
+Each object in the articles array must contain only real-world data in the following fields:
+title: Accurate headline of the original article (string)
+summary: A 1–2 sentence real summary from the article itself (string)
+source: Verified name of the media outlet or publisher (string)
+date: Actual publication date in ISO 8601 format (YYYY-MM-DD) (string)
+referenceUrl: Direct link to the original, publicly accessible article (string)
+imageUrl: Actual URL of the featured or thumbnail image from the article (string)
+imageHint: A short text description of the real image content (e.g. "Andrés Manuel López Obrador in morning press conference") (string)
+category: Must classify the article into one of the following:
 "Politics"
 "Technology"
-"Red Notes" (i.e., crime and public safety)
+"Red Notes" (crime/public safety)
 "Sports"
 "Entertainment"
-or suggest a more appropriate category if the above are not suitable, such as "Health", "Business", "Culture", "Environment", or "Science"
+Or, if more appropriate, suggest a realistic and commonly used category like "Business", "Health", "Science", "Culture", or "Environment"
 
-Ensure that the final list of articles includes a diverse mix of categories and reflects what is currently resonating or trending with the Mexican audience on digital and social platforms.`,
+Notes:
+Ensure a diverse distribution across categories.
+All URLs (both article and image) must be valid and active.
+Do not use fictional examples, placeholders, or approximations.
+The final result should represent current trending topics in Mexico as reflected in real-time digital media.`,
           },
         ],
         model: 'grok-4',
