@@ -83,8 +83,8 @@ The final result should represent current trending topics in Mexico as reflected
           Accept: 'application/json',
         },
         data,
-        // Allow up to 5 minutes for the request to complete
-        timeout: 300_000,
+        // Allow up to 10 minutes for the request to complete
+        timeout: 600_000,
       };
 
       const start = Date.now();
@@ -140,7 +140,7 @@ The final result should represent current trending topics in Mexico as reflected
           Accept: 'application/json',
         },
         data,
-        timeout: 300_000,
+        timeout: 600_000,
       };
 
       const start = Date.now();
